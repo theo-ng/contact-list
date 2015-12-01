@@ -1,4 +1,7 @@
-$(document).ready(function() {
+$(function() {
 
-  // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
+  $('#btn-new').on("click", function() {
+    $('.new').text('new stuff');
+  });
+
 });
