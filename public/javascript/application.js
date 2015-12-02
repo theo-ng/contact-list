@@ -21,6 +21,7 @@ $(function() {
     getContacts: function(contacts) {
       $.each(contacts, function(i, contact) {
         handlers.addToList(contact);
+        handlers.filterList();
       });
     },
     addToListAfterCreate: function(data) {
@@ -55,6 +56,20 @@ $(function() {
           }
         });
       });
+    },
+    filterList: function() {
+      $('#term').on("keyup", function() {
+        $term = $(this).val();
+        if($term) {
+          hide = $contacts.find('li:not(:Contains('+$term+'))');
+          hide.closest('div').slideUp();
+          show = $contacts.find('li:Contains('+$term+')');
+          show.closest('div').slideDown();
+        }
+        else {
+          $contacts.find('li').slideDown();
+        }
+      });
     }
   };
 
@@ -68,8 +83,10 @@ $(function() {
 
   $('#btn-search').on("click", handlers.toggleSearch);
 
-  $('#term').on("change", function() {
-    //to be done later
+  jQuery.expr[":"].Contains = jQuery.expr.createPseudo(function(arg) {
+    return function( elem ) {
+      return jQuery(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+    };
   });
 
 });
