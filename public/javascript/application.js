@@ -33,6 +33,7 @@ $(function() {
       var lName = $('#lastName').val();
       var email = $('#email').val();
       var contact = { firstname: fName, lastname: lName, email: email }
+      $('#newContact div input').val('');
 
       $.post("/contacts/new", contact, handlers.addToListAfterCreate, 'json');
     },
@@ -67,12 +68,8 @@ $(function() {
 
   $('#btn-search').on("click", handlers.toggleSearch);
 
-  
-  // });
-
-  // $('#term').on("change", function() {
-  //   $contact.empty();
-
-  // }
+  $('#term').on("change", function() {
+    
+  });
 
 });
