@@ -1,14 +1,52 @@
+<section class="container centered">
 <h1>Contact List</h1>
 
-<div class="new">
+<div class="u-full-width" id="new">
   <button class="button-primary" id="btn-new">New</button>
 </div>
-<div class="list">
+<div id="newContact">
+  <div>
+    <input id="firstName" placeholder="First Name">
+  </div>
+  <div>
+    <input id="lastName" placeholder="Last Name">
+  </div>
+  <div>
+    <input id="email" placeholder="Email">
+  </div>
+  <button class="button-primary" id="btn-new-contact">Submit</button>
+</div>
+<div class="u-full-width" id="list">
   <button class="button-primary" id="btn-list">List</button>
 </div>
-<div class="show">
+<div>
+  <ul id="contacts"></ul>
+</div>
+<div class="u-full-width" id="show">
   <button class="button-primary" id="btn-show">Show</button>
 </div>
-<div class="find">
+<div class="u-full-width" id="find">
   <button class="button-primary" id="btn-find">Find</button>
 </div>
+</section>
+
+
+<!-- <form class="ten columns" id="newContact" method="post" action="/contacts/new">
+    <div class="row">
+      <div>
+        <label>First Name:</label>
+        <input name="firstName" id="firstName">
+      </div>
+      <div>
+        <label>Last Name:</label>
+        <input name="lastName" id="lastName">
+      </div>
+      <div>
+      <label>Email:</label>
+      <input name="email" id="email">
+      </div>
+      <div>
+      <input class="button-primary" id="btn-new-contact" type="submit" value="Submit">
+      </div>
+    </div>
+  </form> -->
