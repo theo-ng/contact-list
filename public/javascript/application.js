@@ -69,7 +69,7 @@ $(function() {
   $('#btn-search').on("click", handlers.toggleSearch);
 
   $('#term').on("change", function() {
-    
+    //to be done later
   });
 
 });
