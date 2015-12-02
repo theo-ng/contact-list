@@ -15,6 +15,9 @@
     <div>
       <input id="email" placeholder="Email">
     </div>
+    <div>
+      <input id="phoneNums" placeholder="Phone Number">
+    </div>
     <button class="button-primary" id="btn-new-contact">Submit</button>
   </div>
   <div id="list">
@@ -28,6 +31,18 @@
   </div>
 </span>
 <span class="seven columns" id="contactList">
-  <ul id="contacts"></ul>
+  <table id="contactsTbl">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="contacts">
+    </tbody>
+  </table>
+  <!-- <ul id="contacts"></ul> -->
 </span>
 </section>
