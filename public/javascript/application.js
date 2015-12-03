@@ -1,40 +1,27 @@
 $(function() {
-  // var $contacts = $('#contacts');
+  var $contacts = $('#contacts');
   
   var handlers = {
-    contactsTable: $('#contactsTbl'),
-    contacts: $('#contacts'),
-    toggleNew: function() {
-      $('#newContact').toggle();
-    },
-    toggleList: function() {
-      handlers.contactsTable.toggle();
-    },
     addToList: function (contact) {
-      var row = $('<tr>').addClass('u-full-width').appendTo(handlers.contacts);
+      var row = $('<tr>').addClass('u-full-width').appendTo($contacts);
       var $fname = $('<td>').text(contact.firstname);
       var $lname = $('<td>').text(contact.lastname);
       var $email = $('<td>').text(contact.email);
+      var $phone = $('<td>').text(contact.phone);
       var $del = $('<td>');
 
-      $del.html($('<button>').addClass('button-primary').addClass('delete').attr('contactid', contact.id).text("Delete"));
+      $del.html($('<button>', {
+        'class': 'button-primary delete',
+        'data-contactid': contact.id,
+        'text': "Delete"
+      }));
 
-      $fname.appendTo(row);
-      $lname.appendTo(row);
-      $email.appendTo(row);
-      $del.appendTo(row);
+      row.append($fname).append($lname).append($email).append($phone).append($del);
 
-      // $contact.text("Name: " + contact.firstname + " " + contact.lastname + " Email: " + contact.email);
-      // $contact.appendTo(con);
-      // var span = $('<span>').addClass('two column');
-      // var button = $('<button>').addClass('button-primary').addClass('delete').attr('contactid', contact.id).text("Delete");
-      // button.appendTo(span).appendTo(con);
-      handlers.deleteContact();
     },
     getContacts: function(contacts) {
       $.each(contacts, function(i, contact) {
         handlers.addToList(contact);
-        handlers.filterList();
       });
     },
     addToListAfterCreate: function(data) {
@@ -46,55 +33,57 @@ $(function() {
       var fName = $('#firstName').val();
       var lName = $('#lastName').val();
       var email = $('#email').val();
-      var contact = { firstname: fName, lastname: lName, email: email }
+      var phone = $('#phone').val();
+      var contact = { firstname: fName, lastname: lName, email: email, phone: phone};
       $('#newContact div input').val('');
 
       $.post("/contacts/new", contact, handlers.addToListAfterCreate, 'json');
-    },
-    toggleSearch: function() {
-      $('#searchBox').toggle();
     },
     removeFromList: function(contact) {
       contact.remove();
     },
     deleteContact: function() {
-      $('.delete').unbind().on("click", function() {
-        var button = $(this);
-        var parent = button.closest('tr');
-        $.ajax({
-          url: "/contacts/"+button.attr('contactid'),
-          method: 'DELETE',
-          success: function(result) {
-            handlers.removeFromList(parent);
-          }
-        });
+      var button = $(this);
+      var parent = button.closest('tr');
+      $.ajax({
+        url: "/contacts/"+button.data('contactid'),
+        method: 'DELETE',
+        success: function(result) {
+          handlers.removeFromList(parent);
+        }
       });
     },
     filterList: function() {
-      $('#term').on("keyup", function() {
-        $term = $(this).val();
-        if($term) {
-          $hide = handlers.contacts.find('td:not(:Contains('+$term+'))');
-          $hide.closest('tr').hide();
-          $show = handlers.contacts.find('td:Contains('+$term+')');
-          $show.closest('tr').show();
-        }
-        else {
-          handlers.contacts.find('td').closest('tr').show();
-        }
-      });
+      if(!$('tbody tr').length) return;
+      $term = $(this).val();
+      if($term) {
+        $hide = $contacts.find('td:not(:Contains('+$term+'))');
+        $hide.closest('tr').hide();
+        $show = $contacts.find('td:Contains('+$term+')');
+        $show.closest('tr').show();
+      }
+      else {
+        $contacts.find('td').closest('tr').show();
+      }
     }
   };
 
-  $('#btn-new').on("click", handlers.toggleNew);
+  function bindEvents() {
+    $('#btn-new-contact').on("click", handlers.addContact);
 
-  $('#btn-list').on("click", handlers.toggleList);
+    $.getJSON("/contacts", handlers.getContacts);
 
-  $('#btn-new-contact').on("click", handlers.addContact);
+    $('table').on("click", '.delete', handlers.deleteContact);
 
-  $.getJSON("/contacts", handlers.getContacts);
+    $('#term').on("keyup", handlers.filterList);
 
-  $('#btn-search').on("click", handlers.toggleSearch);
+    $('[data-toggle]').on('click', function() {
+      $($(this).data('toggle')).toggle();
+    });
+  }
+
+
+  bindEvents();
 
   jQuery.expr[":"].Contains = jQuery.expr.createPseudo(function(arg) {
     return function( elem ) {

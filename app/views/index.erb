@@ -1,9 +1,9 @@
 <section class="container">
 <h1>Contact List</h1>
 <hr/>
-<span class="one-third column" id="buttons">
+<span class="four columns" id="buttons">
   <div id="new">
-    <button class="button-primary" id="btn-new">New</button>
+    <button class="button-primary" id="btn-new" data-toggle="#newContact">New</button>
   </div>
   <div id="newContact">
     <div>
@@ -16,15 +16,15 @@
       <input id="email" placeholder="Email">
     </div>
     <div>
-      <input id="phoneNums" placeholder="Phone Number">
+      <input id="phone" placeholder="Phone Number">
     </div>
     <button class="button-primary" id="btn-new-contact">Submit</button>
   </div>
   <div id="list">
-    <button class="button-primary" id="btn-list">List</button>
+    <button class="button-primary" id="btn-list" data-toggle="#contactsTbl">List</button>
   </div>
   <div id="search">
-    <button class="button-primary" id="btn-search">Search</button>
+    <button class="button-primary" id="btn-search" data-toggle="#searchBox">Search</button>
   </div>
   <div id="searchBox">
     <input id="term" placeholder="Search term">
@@ -37,12 +37,12 @@
         <th>First Name</th>
         <th>Last Name</th>
         <th>Email</th>
+        <th>Phone</th>
         <th></th>
       </tr>
     </thead>
     <tbody id="contacts">
     </tbody>
   </table>
-  <!-- <ul id="contacts"></ul> -->
 </span>
 </section>

@@ -12,7 +12,7 @@ post '/contacts/new' do
   if contact.save
     contact.to_json
   else
-    halt(404)
+    contact.errors.to_json
   end
 end
 
@@ -21,6 +21,6 @@ delete '/contacts/:id' do
   if (contact.destroy)
     contact.to_json
   else
-    halt(404)
+    contact.errors.to_json
   end
 end
