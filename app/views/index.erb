@@ -1,36 +1,36 @@
 <section class="container">
 <h1>Contact List</h1>
 <hr/>
-<span class="four columns" id="buttons">
+<span class="three columns" id="buttons">
   <div id="new">
-    <button class="button-primary" id="btn-new" data-toggle="#newContact">New</button>
+    <button class="button-primary" type="button" id="btn-new" data-toggle="#newContact">New</button>
   </div>
   <div id="newContact">
     <div>
-      <input id="firstName" placeholder="First Name">
+      <input id="firstName" type="text" placeholder="First Name">
     </div>
     <div>
-      <input id="lastName" placeholder="Last Name">
+      <input id="lastName" type="text" placeholder="Last Name">
     </div>
     <div>
-      <input id="email" placeholder="Email">
+      <input id="email" type="email" placeholder="Email">
     </div>
     <div>
-      <input id="phone" placeholder="Phone Number">
+      <input id="phone" type="tel" placeholder="Phone Number">
     </div>
-    <button class="button-primary" id="btn-new-contact">Submit</button>
+    <button class="button-primary" type="button" id="btn-new-contact">Submit</button>
   </div>
   <div id="list">
-    <button class="button-primary" id="btn-list" data-toggle="#contactsTbl">List</button>
+    <button class="button-primary" type="button" id="btn-list" data-toggle="#contactsTbl">List</button>
   </div>
   <div id="search">
-    <button class="button-primary" id="btn-search" data-toggle="#searchBox">Search</button>
+    <button class="button-primary" type="button" id="btn-search" data-toggle="#searchBox">Search</button>
   </div>
   <div id="searchBox">
-    <input id="term" placeholder="Search term">
+    <input id="term" type="search" placeholder="Search term">
   </div>
 </span>
-<span class="seven columns" id="contactList">
+<span class="eight columns" id="contactList">
   <table id="contactsTbl">
     <thead>
       <tr>
@@ -38,6 +38,7 @@
         <th>Last Name</th>
         <th>Email</th>
         <th>Phone</th>
+        <th></th>
         <th></th>
       </tr>
     </thead>

@@ -1,4 +1,7 @@
 # Homepage (Root path)
+helpers do
+end
+
 get '/' do
   erb :index
 end
@@ -12,15 +15,24 @@ post '/contacts/new' do
   if contact.save
     contact.to_json
   else
-    contact.errors.to_json
+    halt 400
   end
 end
 
 delete '/contacts/:id' do
   contact = Contact.find(params[:id])
-  if (contact.destroy)
+  if contact.destroy
     contact.to_json
   else
-    contact.errors.to_json
+    halt 400
+  end
+end
+
+put '/contacts/:id' do
+  contact = Contact.find(params[:id])
+  if contact.update(request.params)
+    contact.to_json
+  else
+    halt 400
   end
 end

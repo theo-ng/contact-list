@@ -4,11 +4,12 @@ $(function() {
   var handlers = {
     addToList: function (contact) {
       var row = $('<tr>').addClass('u-full-width').appendTo($contacts);
-      var $fname = $('<td>').text(contact.firstname);
-      var $lname = $('<td>').text(contact.lastname);
-      var $email = $('<td>').text(contact.email);
-      var $phone = $('<td>').text(contact.phone);
+      var $fname = $('<td>').attr('contentEditable', 'true').text(contact.firstname);
+      var $lname = $('<td>').attr('contentEditable', 'true').text(contact.lastname);
+      var $email = $('<td>').attr('contentEditable', 'true').text(contact.email);
+      var $phone = $('<td>').attr('contentEditable', 'true').text(contact.phone);
       var $del = $('<td>');
+      var $edit = $('<td>');
 
       $del.html($('<button>', {
         'class': 'button-primary delete',
@@ -16,7 +17,13 @@ $(function() {
         'text': "Delete"
       }));
 
-      row.append($fname).append($lname).append($email).append($phone).append($del);
+      $edit.html($('<button>', {
+        'class': 'button-primary edit',
+        'data-contactid': contact.id,
+        'text': "Save"
+      }));
+
+      row.append($fname).append($lname).append($email).append($phone).append($del).append($edit);
 
     },
     getContacts: function(contacts) {
@@ -37,7 +44,14 @@ $(function() {
       var contact = { firstname: fName, lastname: lName, email: email, phone: phone};
       $('#newContact div input').val('');
 
-      $.post("/contacts/new", contact, handlers.addToListAfterCreate, 'json');
+      $.ajax({
+        url: "/contacts/new",
+        method: 'POST',
+        contentType: 'json',
+        data: contact,
+        success: handlers.addToListAfterCreate
+        // error: function(xhr, status, error){}
+      });
     },
     removeFromList: function(contact) {
       contact.remove();
@@ -65,6 +79,24 @@ $(function() {
       else {
         $contacts.find('td').closest('tr').show();
       }
+    },
+    saveContact: function() {
+      var button = $(this);
+      var parent = button.closest('tr');
+      var fName = button.closest('td').siblings(':eq(0)').text();
+      var lName = button.closest('td').siblings(':eq(1)').text();
+      var email = button.closest('td').siblings(':eq(2)').text();
+      var phone = button.closest('td').siblings(':eq(3)').text();
+      var contact = { id: button.data('contactid'), firstname: fName, lastname: lName, email: email, phone: phone};
+
+      $.ajax({
+        url: "/contacts/"+button.data('contactid'),
+        method: 'PUT',
+        data: contact,
+        error: function(e) {
+          console.log(e);
+        }
+      });
     }
   };
 
@@ -80,6 +112,8 @@ $(function() {
     $('[data-toggle]').on('click', function() {
       $($(this).data('toggle')).toggle();
     });
+
+    $('tbody').on('click', '.edit', handlers.saveContact);
   }
 
 
