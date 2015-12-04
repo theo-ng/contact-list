@@ -100,6 +100,21 @@ $(function() {
     }
   };
 
+  function getYTVideo() {
+    var api_key = 'AIzaSyBo5LX1rpJWx5_lbpfs-7-60oyPj6gc4So';
+    var query = $('#yt-search').val();
+    $.ajax({
+      url: "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q="+query+"&key="+api_key,
+      method: 'GET',
+      contentType: 'json',
+      success: displaySearch
+    });
+  }
+
+  function displaySearch(result) {
+    // result.each
+  }
+
   function bindEvents() {
     $('#btn-new-contact').on("click", handlers.addContact);
 
@@ -114,6 +129,8 @@ $(function() {
     });
 
     $('tbody').on('click', '.edit', handlers.saveContact);
+
+    $('#yt-search').on('keyup', getYTVideo);
   }
 
 
